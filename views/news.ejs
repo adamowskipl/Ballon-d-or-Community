@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News - Ballon d'Or Community</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .news-wrapper {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .news-article-card {
+            background: linear-gradient(145deg, #181822 0%, #111118 100%);
+            border: 1px solid #2e2e40;
+            border-left: 5px solid #e5a93c;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .news-article-card:hover {
+            transform: translateY(-3px);
+            border-color: #f7be58;
+        }
+
+        .news-meta {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 12px;
+        }
+
+        .news-badge {
+            background: rgba(229, 169, 60, 0.15);
+            color: #e5a93c;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .news-date {
+            color: #777;
+            font-size: 0.85rem;
+        }
+
+        .news-title {
+            font-family: 'Cinzel', serif;
+            color: #fff;
+            font-size: 1.6rem;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .news-body {
+            color: #ccc;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        .news-body p {
+            margin-bottom: 10px;
+        }
+
+        .news-body p:last-child {
+            margin-bottom: 0;
+        }
+
+        .criteria-list {
+            margin: 15px 0 0 20px;
+            color: #ddd;
+        }
+
+        .criteria-list li {
+            margin-bottom: 8px;
+        }
+
+        .criteria-list strong {
+            color: #e5a93c;
+        }
+    </style>
+</head>
+<body>
+
+    <%- include('partials/navbar') %>
+
+    <main class="news-wrapper">
+        <h1 class="page-title">Ballon d'Or Latest Updates</h1>
+        <p class="page-subtitle">Official announcements, voting guidelines, and ceremony insights.</p>
+
+        <div class="news-grid">
+            
+            <!-- Artykuł 1 -->
+            <article class="news-article-card">
+                <div class="news-meta">
+                    <span class="news-badge">Ceremony</span>
+                    <span class="news-date">Gala Preview</span>
+                </div>
+                <h2 class="news-title">Global Fan Community Prepares for the Official Paris Gala</h2>
+                <div class="news-body">
+                    <p>
+                        The Ballon d'Or remains the most prestigious individual football prize on the planet. Ahead of the official event at the Théâtre du Châtelet in Paris, our community voting platform allows football enthusiasts worldwide to cast their authoritative TOP 30 ballot.
+                    </p>
+                    <p>
+                        Every submission shifts the global standings in real-time, giving supporters a voice alongside international journalists and football federations.
+                    </p>
+                </div>
+            </article>
+
+            <!-- Artykuł 2 -->
+            <article class="news-article-card">
+                <div class="news-meta">
+                    <span class="news-badge">Rules & Criteria</span>
+                    <span class="news-date">Voting Guidelines</span>
+                </div>
+                <h2 class="news-title">Key Pillars Behind the 2024–2026 Nominee Evaluation</h2>
+                <div class="news-body">
+                    <p>
+                        Voters are encouraged to assess each candidate across the entire sporting season based on three fundamental tenets established by France Football:
+                    </p>
+                    <ul class="criteria-list">
+                        <li><strong>Individual Performance & Decisiveness:</strong> Outstanding match-winning plays, goals, assists, and clean sheets in clutch moments.</li>
+                        <li><strong>Team Success & Major Honors:</strong> Continental silverware such as the UEFA Champions League, Euro, Copa América, and domestic league championships.</li>
+                        <li><strong>Class & Fair Play:</strong> Exemplary conduct on the pitch, leadership, sportsmanship, and respect towards rivals.</li>
+                    </ul>
+                </div>
+            </article>
+
+            <!-- Artykuł 3 -->
+            <article class="news-article-card">
+                <div class="news-meta">
+                    <span class="news-badge">Scoring System</span>
+                    <span class="news-date">System Architecture</span>
+                </div>
+                <h2 class="news-title">How Community Ranking Points Are Calculated</h2>
+                <div class="news-body">
+                    <p>
+                        Our platform employs an inverse linear distribution system to reflect fair competition across all 30 ranked slots. Placing a player at #1 awards them <strong>30 points</strong>, #2 yields <strong>29 points</strong>, with each descending tier decreasing by one point down to <strong>1 point</strong> for slot #30.
+                    </p>
+                    <p>
+                        Remember that ballots are only officially registered once all 30 positions are populated, ensuring comprehensive and balanced judgment.
+                    </p>
+                </div>
+            </article>
+
+        </div>
+    </main>
+
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Official Ranking - Ballon d'Or</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .filter-form-box {
+            background: #181822;
+            padding: 18px 20px;
+            border-radius: 8px;
+            border: 1px solid #2e2e40;
+            margin: 20px 0;
+            display: flex;
+            gap: 15px;
+            align-items: flex-end;
+            flex-wrap: wrap;
+        }
+        .filter-field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .filter-field label {
+            font-size: 0.8rem;
+            color: #aaa;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        .filter-field input, .filter-field select {
+            background: #242432;
+            border: 1px solid #3d3d52;
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+        .filter-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .btn-filter {
+            background: #e5a93c;
+            color: #000;
+            border: none;
+            padding: 8px 18px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn-reset {
+            background: #333;
+            color: #fff;
+            padding: 8px 14px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            display: inline-block;
+        }
+        .download-box {
+            margin-top: 25px;
+            text-align: right;
+        }
+        .btn-download {
+            background: #252536;
+            color: #e5a93c;
+            border: 1px solid #3c3c54;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-download:hover {
+            background: #e5a93c;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+
+    <%- include('partials/navbar') %>
+
+    <main class="ranking-container">
+        <h1 class="page-title">
+            <% if (typeof clubFilterName !== 'undefined') { %>
+                Players from <%= clubFilterName %>
+            <% } else { %>
+                Ballon d'Or Official Community Standings
+            <% } %>
+        </h1>
+        <p class="page-subtitle">Current global points accumulated from user rankings.</p>
+
+        <form action="/ranking" method="GET" class="filter-form-box">
+            <div class="filter-field">
+                <label for="search">Player Name:</label>
+                <input type="text" id="search" name="search" placeholder="e.g. Vinicius" value="<%= filters.search %>">
+            </div>
+
+            <div class="filter-field">
+                <label for="minGoals">Min Goals:</label>
+                <input type="number" id="minGoals" name="minGoals" placeholder="0" min="0" value="<%= filters.minGoals %>" style="width: 100px;">
+            </div>
+
+            <div class="filter-field">
+                <label for="position">Position:</label>
+                <select id="position" name="position">
+                    <option value="All" <%= filters.position === 'All' ? 'selected' : '' %>>All Positions</option>
+                    <option value="Attacker" <%= filters.position === 'Attacker' ? 'selected' : '' %>>Attacker</option>
+                    <option value="Midfielder" <%= filters.position === 'Midfielder' ? 'selected' : '' %>>Midfielder</option>
+                    <option value="Defender" <%= filters.position === 'Defender' ? 'selected' : '' %>>Defender</option>
+                    <option value="Goalkeeper" <%= filters.position === 'Goalkeeper' ? 'selected' : '' %>>Goalkeeper</option>
+                </select>
+            </div>
+
+            <div class="filter-actions">
+                <button type="submit" class="btn-filter">Filter</button>
+                <a href="/ranking" class="btn-reset">Reset</a>
+            </div>
+        </form>
+
+        <div class="ranking-tiers-legend">
+            <span class="tier-pill tier-gold">● Rank 1: Gold</span>
+            <span class="tier-pill tier-silver">● Rank 2–5: Silver</span>
+            <span class="tier-pill tier-bronze">● Rank 6–10: Bronze</span>
+        </div>
+
+        <table class="ranking-table">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Player</th>
+                    <th>Club</th>
+                    <th>Position</th>
+                    <th>Goals / Assists</th>
+                    <th>Points</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (players.length === 0) { %>
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 25px; color: #888;">No players found matching current filters.</td>
+                    </tr>
+                <% } %>
+                <% players.forEach((player, index) => { 
+                    let rankClass = '';
+                    if (index === 0) rankClass = 'rank-gold';
+                    else if (index >= 1 && index <= 4) rankClass = 'rank-silver';
+                    else if (index >= 5 && index <= 9) rankClass = 'rank-bronze';
+                %>
+                    <tr class="<%= rankClass %>">
+                        <td class="rank-pos">
+                            <% if (index === 0) { %>🥇 #1<% } %>
+                            <% if (index >= 1 && index <= 4) { %>🥈 #<%= index + 1 %><% } %>
+                            <% if (index >= 5 && index <= 9) { %>🥉 #<%= index + 1 %><% } %>
+                            <% if (index > 9) { %>#<%= index + 1 %><% } %>
+                        </td>
+                        <td class="player-cell">
+                            <a href="/player/<%= player.id %>?from=ranking"><%= player.name %></a>
+                        </td>
+                        <td>
+                            <a href="/players/club/<%= encodeURIComponent(player.club.toLowerCase().replace(/\s+/g, '-')) %>" title="View club nominees" style="text-decoration: underline; color: #bbb;">
+                                <%= player.club %>
+                            </a>
+                        </td>
+                        <td><%= player.position %></td>
+                        <td><%= player.goals %> / <%= player.assists %></td>
+                        <td class="points-cell"><strong><%= player.votes %> pts</strong></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+
+        <div class="download-box">
+            <a href="/download-rules" class="btn-download">📥 Download Rules (TXT)</a>
+        </div>
+    </main>
+
+</body>
+</html>

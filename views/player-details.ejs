@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= player.name %> - Player Profile</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <%- include('partials/navbar') %>
+
+    <main class="profile-page-wrapper">
+        <div class="player-hero-card">
+            
+            <!-- Duże zdjęcie zawodnika z numerem ID -->
+            <div class="player-photo-column">
+                <div class="photo-frame">
+                    <img src="<%= player.image %>" alt="<%= player.name %>" class="player-main-photo" onerror="this.src='https://ui-avatars.com/api/?name=<%= encodeURIComponent(player.name) %>&size=500&background=e5a93c&color=000&bold=true'">
+                    <span class="player-id-badge">#<%= player.id %></span>
+                </div>
+                
+                <% if (typeof fromRanking !== 'undefined' && fromRanking) { %>
+                    <a href="/ranking" class="back-action-btn">← Back to Live Ranking</a>
+                <% } else { %>
+                    <a href="/voting" class="back-action-btn">← Back to Voting</a>
+                <% } %>
+            </div>
+
+            <!-- Dane, Statystyki i Osiągnięcia -->
+            <div class="player-info-column">
+                <div class="player-titles">
+                    <span class="position-tag"><%= player.position %></span>
+                    <h1 class="player-full-name"><%= player.name %></h1>
+                    <h3 class="player-club-name"><%= player.club %></h3>
+                </div>
+
+                <!-- Duża siatka statystyk -->
+                <div class="stats-showcase">
+                    <div class="stat-box highlight-stat">
+                        <span class="stat-number"><%= player.votes %></span>
+                        <span class="stat-title">Ballon d'Or Points</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-number"><%= player.goals %></span>
+                        <span class="stat-title">Goals Scored</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-number"><%= player.assists %></span>
+                        <span class="stat-title">Assists</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-number"><%= player.clean_sheets %></span>
+                        <span class="stat-title">Clean Sheets</span>
+                    </div>
+                </div>
+
+                <!-- Lista pucharów -->
+                <div class="trophies-panel">
+                    <h4>Season Honors & Trophies</h4>
+                    <% if (player.trophies && player.trophies.length > 0) { %>
+                        <ul class="trophies-list-large">
+                            <% player.trophies.forEach(t => { %>
+                                <li>
+                                    <span class="trophy-cup-icon">🏆</span>
+                                    <strong><%= t.name %></strong>
+                                    <span class="trophy-region">(<%= t.country %>)</span>
+                                </li>
+                            <% }) %>
+                        </ul>
+                    <% } else { %>
+                        <p class="no-trophies-text">No official titles recorded for this campaign.</p>
+                    <% } %>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+</body>
+</html>
